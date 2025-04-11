@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id("io.qameta.allure") version "2.12.0"
+}
+
+group = 'io.github.osvalda'
+version = '1.0-SNAPSHOT'
+
+def allureVersion = "2.29.0"
+
+allure {
+    version = allureVersion
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.register('testRegression', Test) {
+    useTestNG() {
+        testLogging.showStandardStreams = true
+    }
+}
+
+tasks.register('deleteReportDir', Delete) {
+    delete files("build/reports/allure-report/")
+}
+
+dependencies {
+    testImplementation group: 'com.microsoft.playwright', name: 'playwright', version: '1.51.0'
+
+    testImplementation group: 'com.github.automatedowl', name: 'allure-environment-writer', version: '1.0.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.17'
+
+    testImplementation group: 'io.qameta.allure', name: 'allure-testng', version: allureVersion
+
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.27.3'
+}

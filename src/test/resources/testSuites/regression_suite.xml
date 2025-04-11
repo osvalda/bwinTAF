@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Tests">
+
+    <test name="Regression">
+        <packages>
+            <package name="io.github.osvalda.exampleTests.*"/>
+        </packages>
+    </test>
+</suite>
