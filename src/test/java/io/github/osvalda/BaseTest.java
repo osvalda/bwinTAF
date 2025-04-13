@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
@@ -22,11 +23,14 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 public abstract class BaseTest implements IHookable {
 
     private static final String SITE_URL_KEY = "site.url";
+    private static final String TIMEOUT_KEY = "timeout";
 
     protected Page page;
     private Playwright playwright;
     private BrowserType.LaunchOptions options;
     private BrowserContext context;
+    @Getter
+    private static long timeout;
 
     @Description("Precondition environment setup and main navigation.")
     @BeforeSuite(alwaysRun = true)
@@ -34,6 +38,7 @@ public abstract class BaseTest implements IHookable {
         String environment = getEnvironmentName();
         Properties envProperties = getPropertiesFile(environment);
         String siteUrl = envProperties.getProperty(SITE_URL_KEY);
+        timeout = Long.parseLong(envProperties.getProperty(TIMEOUT_KEY, "10000"));
 
         playwright = Playwright.create();
 
@@ -105,8 +110,6 @@ public abstract class BaseTest implements IHookable {
     public void tearDown() {
         page.close();
     }
-
-
 
     @Override
     public void run(IHookCallBack callBack, ITestResult testResult) {

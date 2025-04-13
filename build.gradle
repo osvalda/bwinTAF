@@ -29,6 +29,8 @@ tasks.register('deleteReportDir', Delete) {
 dependencies {
     testImplementation group: 'com.microsoft.playwright', name: 'playwright', version: '1.51.0'
 
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: '3.0.0'
+
     testImplementation group: 'com.github.automatedowl', name: 'allure-environment-writer', version: '1.0.0'
     testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
 
